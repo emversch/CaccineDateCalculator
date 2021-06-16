@@ -16,7 +16,7 @@ texttodata = {
     "Pfizer/BioNTech": "pfizer",
     "J&J": "jj",
     "Moderna": "moderna",
-    "AstraZeneca": "az"
+    "AstraZeneca/Oxford": "az"
 }
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -155,7 +155,7 @@ class Ui_MainWindow(object):
         self.vaccinSelector.setItemText(0, _translate("Vaccine Date Calculator", "Pfizer/BioNTech"))
         self.vaccinSelector.setItemText(1, _translate("Vaccine Date Calculator", "J&J"))
         self.vaccinSelector.setItemText(2, _translate("Vaccine Date Calculator", "Moderna"))
-        self.vaccinSelector.setItemText(3, _translate("Vaccine Date Calculator", "AstraZeneca"))
+        self.vaccinSelector.setItemText(3, _translate("Vaccine Date Calculator", "AstraZeneca/Oxford"))
         self.labelLetter.setText(_translate("Vaccine Date Calculator", "Datum oproepingsbrief"))
         self.Qvax.setText(_translate("Vaccine Date Calculator", "QVax"))
         self.labelQvax.setText(_translate("Vaccine Date Calculator", "Datum QVax afspraak"))
