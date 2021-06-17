@@ -117,8 +117,11 @@ class Ui_MainWindow(object):
         self.vaccinSelector.textActivated.connect(self.on_JJ)
     
     def on_click(self):
-        dl = self.dateLetter.dateTime().toPyDateTime()
         qv = self.Qvax.isChecked()
+        if qv:
+            dl = self.dateQvax.dateTime().toPyDateTime()
+        else:
+            dl = self.dateLetter.dateTime().toPyDateTime()
         keycheckup = self.vaccinSelector.currentText()
         vc = texttodata[keycheckup]
         dates=calcVacc(vc, dl, qv)
