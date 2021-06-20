@@ -9,15 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from calcVacc import calcVacc
-import datetime
 
-texttodata = {
-    "Pfizer/BioNTech": "pfizer",
-    "J&J": "jj",
-    "Moderna": "moderna",
-    "AstraZeneca/Oxford": "az"
-}
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Vaccin Date Calculator")
@@ -44,14 +36,14 @@ class Ui_MainWindow(object):
         self.dateLetter.setAlignment(QtCore.Qt.AlignCenter)
         self.dateLetter.setCalendarPopup(True)
         self.dateLetter.setObjectName("dateLetter")
-        self.dateLetter.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
+
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.dateLetter)
         self.dateDose2 = QtWidgets.QDateEdit(self.centralwidget)
         self.dateDose2.setAlignment(QtCore.Qt.AlignCenter)
         self.dateDose2.setReadOnly(True)
         self.dateDose2.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.dateDose2.setObjectName("dateDose2")
-        self.dateDose2.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
+
         self.formLayout.setWidget(18, QtWidgets.QFormLayout.FieldRole, self.dateDose2)
         self.Qvax = QtWidgets.QCheckBox(self.centralwidget)
         self.Qvax.setObjectName("Qvax")
@@ -67,7 +59,7 @@ class Ui_MainWindow(object):
         self.dateQvax.setCurrentSection(QtWidgets.QDateTimeEdit.DaySection)
         self.dateQvax.setCalendarPopup(True)
         self.dateQvax.setObjectName("dateQvax")
-        self.dateQvax.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
+
         self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.dateQvax)
         self.calcbutton = QtWidgets.QPushButton(self.centralwidget)
         self.calcbutton.setObjectName("calcbutton")
@@ -111,44 +103,6 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-        self.calcbutton.clicked.connect(self.on_click)
-        self.Qvax.toggled.connect(self.on_select)
-        self.vaccinSelector.textActivated.connect(self.on_JJ)
-    
-    def on_click(self):
-        qv = self.Qvax.isChecked()
-        if qv:
-            dl = self.dateQvax.dateTime().toPyDateTime()
-        else:
-            dl = self.dateLetter.dateTime().toPyDateTime()
-        keycheckup = self.vaccinSelector.currentText()
-        vc = texttodata[keycheckup]
-        dates=calcVacc(vc, dl, qv)
-        self.dateDose1.setDateTime(QtCore.QDateTime(dates[0], QtCore.QTime(0, 0, 0)))
-        self.dateDose2.setDateTime(QtCore.QDateTime(dates[1], QtCore.QTime(0, 0, 0)))
-        self.dateProtected.setDateTime(QtCore.QDateTime(dates[2], QtCore.QTime(0, 0, 0)))
-
-    def on_select(self):
-        vinkje = self.Qvax.isChecked()
-        self.dateQvax.setEnabled(vinkje)
-        self.labelQvax.setEnabled(vinkje)
-        self.dateLetter.setEnabled(not vinkje)
-        self.labelLetter.setEnabled(not vinkje)
-        if vinkje:
-            self.dateDose1.hide()
-            self.labelDose1.hide()
-        else:
-            self.dateDose1.show()
-            self.labelDose1.show()
-
-    def on_JJ(self):
-        if self.vaccinSelector.currentText() == 'J&J':
-            self.dateDose2.hide()
-            self.labelDose2.hide()
-        else:
-            self.dateDose2.show()
-            self.labelDose2.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
