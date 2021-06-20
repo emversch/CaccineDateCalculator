@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>384</height>
+    <width>416</width>
+    <height>355</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Vaccine Date Calculator</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QFormLayout" name="formLayout">
@@ -47,7 +47,7 @@
       </item>
       <item>
        <property name="text">
-        <string>AstraZeneca</string>
+        <string>AstraZeneca/Oxford</string>
        </property>
       </item>
      </widget>
@@ -55,7 +55,7 @@
     <item row="1" column="0">
      <widget class="QLabel" name="labelLetter">
       <property name="text">
-       <string>Datum oproepingsbrief</string>
+       <string>Datum oproepingsbrief *</string>
       </property>
      </widget>
     </item>
@@ -69,23 +69,10 @@
       </property>
      </widget>
     </item>
-    <item row="18" column="1">
-     <widget class="QDateEdit" name="dateDose2">
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="buttonSymbols">
-       <enum>QAbstractSpinBox::NoButtons</enum>
-      </property>
-     </widget>
-    </item>
     <item row="4" column="0">
-     <widget class="QCheckBox" name="Qvax">
+     <widget class="QCheckBox" name="dose1Known">
       <property name="text">
-       <string>QVax</string>
+       <string>datum 1e dosis bekend</string>
       </property>
       <property name="checked">
        <bool>false</bool>
@@ -93,17 +80,17 @@
      </widget>
     </item>
     <item row="5" column="0">
-     <widget class="QLabel" name="labelQvax">
+     <widget class="QLabel" name="labelDose1Known">
       <property name="enabled">
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>Datum QVax afspraak</string>
+       <string>Datum 1e dosis</string>
       </property>
      </widget>
     </item>
     <item row="5" column="1">
-     <widget class="QDateEdit" name="dateQvax">
+     <widget class="QDateEdit" name="dateDose1Known">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -138,29 +125,6 @@
       </property>
      </widget>
     </item>
-    <item row="18" column="0">
-     <widget class="QLabel" name="labelDose2">
-      <property name="text">
-       <string>2e dosis</string>
-      </property>
-     </widget>
-    </item>
-    <item row="20" column="1">
-     <widget class="QDateEdit" name="dateProtected">
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="buttonSymbols">
-       <enum>QAbstractSpinBox::NoButtons</enum>
-      </property>
-     </widget>
-    </item>
     <item row="17" column="1">
      <widget class="QDateEdit" name="dateDose1">
       <property name="enabled">
@@ -192,7 +156,7 @@
         <hour>0</hour>
         <minute>0</minute>
         <second>0</second>
-        <year>2021</year>
+        <year>2000</year>
         <month>1</month>
         <day>1</day>
        </datetime>
@@ -215,10 +179,59 @@
       </property>
      </widget>
     </item>
+    <item row="18" column="0">
+     <widget class="QLabel" name="labelDose2">
+      <property name="text">
+       <string>2e dosis</string>
+      </property>
+     </widget>
+    </item>
+    <item row="18" column="1">
+     <widget class="QDateEdit" name="dateDose2">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::NoButtons</enum>
+      </property>
+     </widget>
+    </item>
     <item row="20" column="0">
      <widget class="QLabel" name="labelProtected">
       <property name="text">
        <string>volledige bescherming</string>
+      </property>
+     </widget>
+    </item>
+    <item row="20" column="1">
+     <widget class="QDateEdit" name="dateProtected">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::NoButtons</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="21" column="0" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>6</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>* programma berekent datum 1e dosis als 2 weken na datum oproepingsbrief</string>
       </property>
      </widget>
     </item>
@@ -229,7 +242,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>416</width>
      <height>21</height>
     </rect>
    </property>

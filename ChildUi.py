@@ -19,19 +19,24 @@ class ChildUi(gui.Ui_MainWindow):
 
         # set default dates to today
         self.dateLetter.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
-        self.dateDose2.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
-        self.dateQvax.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
+        self.dateDose1Known.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
+
+        # hide dates before first calculation
+        self.hide_dates()
 
         # create callbacks
         self.calcbutton.clicked.connect(self.on_click)
-        self.Qvax.toggled.connect(self.on_select)
-        self.vaccinSelector.textActivated.connect(self.on_JJ)
+        self.dose1Known.toggled.connect(self.on_select)
+        self.vaccinSelector.textActivated.connect(self.hide_dates)
+        self.dateLetter.dateChanged.connect(self.hide_dates)
+        self.dateDose1Known.dateChanged.connect(self.hide_dates)
 
     # "click calculate" callback
     def on_click(self):
-        qv = self.Qvax.isChecked()
+        self.clicked_once=True
+        qv = self.dose1Known.isChecked()
         if qv:
-            dl = self.dateQvax.dateTime().toPyDateTime()
+            dl = self.dateDose1Known.dateTime().toPyDateTime()
         else:
             dl = self.dateLetter.dateTime().toPyDateTime()
         keycheckup = self.vaccinSelector.currentText()
@@ -41,25 +46,36 @@ class ChildUi(gui.Ui_MainWindow):
         self.dateDose2.setDateTime(QtCore.QDateTime(dates[1], QtCore.QTime(0, 0, 0)))
         self.dateProtected.setDateTime(QtCore.QDateTime(dates[2], QtCore.QTime(0, 0, 0)))
 
-    # "click QVax" callback
+        # make dates visible
+        self.show_dates()
+
+    # "click dose1Known" callback
     def on_select(self):
-        checkmark = self.Qvax.isChecked()
-        self.dateQvax.setEnabled(checkmark)
-        self.labelQvax.setEnabled(checkmark)
+        checkmark = self.dose1Known.isChecked()
+        self.dateDose1Known.setEnabled(checkmark)
+        self.labelDose1Known.setEnabled(checkmark)
         self.dateLetter.setEnabled(not checkmark)
         self.labelLetter.setEnabled(not checkmark)
-        if checkmark:
-            self.dateDose1.hide()
-            self.labelDose1.hide()
-        else:
-            self.dateDose1.show()
-            self.labelDose1.show()
+        self.hide_dates()
 
-    # "select J&J" callback
-    def on_JJ(self):
-        if self.vaccinSelector.currentText() == 'J&J':
-            self.dateDose2.hide()
-            self.labelDose2.hide()
-        else:
-            self.dateDose2.show()
-            self.labelDose2.show()
+    # show dates            
+    def show_dates(self):
+        ch = self.dose1Known.isChecked()  
+        self.dateDose1.setVisible(not ch)
+        self.labelDose1.setVisible(not ch)
+
+        is_jj = texttodata[self.vaccinSelector.currentText()] == 'jj'
+        self.dateDose2.setVisible(not is_jj)
+        self.labelDose2.setVisible(not is_jj)
+
+        self.dateProtected.show()
+        self.labelProtected.show()
+   
+    # hide dates
+    def hide_dates(self):
+        self.dateDose1.hide()
+        self.labelDose1.hide()
+        self.dateProtected.hide()
+        self.labelProtected.hide()
+        self.labelDose2.hide()
+        self.dateDose2.hide()
