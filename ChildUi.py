@@ -1,6 +1,6 @@
 
 from calcVacc import calcVacc
-import VaccineDateCalculator as vdc
+import gui
 import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -11,7 +11,8 @@ texttodata = {
     "AstraZeneca/Oxford": "az"
 }
 
-class ChildUi(vdc.Ui_MainWindow):
+# inheritance to create callbacks and modify stuff from automatically generated gui.py
+class ChildUi(gui.Ui_MainWindow):
 
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
@@ -42,12 +43,12 @@ class ChildUi(vdc.Ui_MainWindow):
 
     # "click QVax" callback
     def on_select(self):
-        vinkje = self.Qvax.isChecked()
-        self.dateQvax.setEnabled(vinkje)
-        self.labelQvax.setEnabled(vinkje)
-        self.dateLetter.setEnabled(not vinkje)
-        self.labelLetter.setEnabled(not vinkje)
-        if vinkje:
+        checkmark = self.Qvax.isChecked()
+        self.dateQvax.setEnabled(checkmark)
+        self.labelQvax.setEnabled(checkmark)
+        self.dateLetter.setEnabled(not checkmark)
+        self.labelLetter.setEnabled(not checkmark)
+        if checkmark:
             self.dateDose1.hide()
             self.labelDose1.hide()
         else:
