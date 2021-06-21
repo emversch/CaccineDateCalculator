@@ -1,11 +1,10 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from calcVacc import calcVacc
+from PyQt5 import QtWidgets as qtw
 import ChildUi as cu
 
 # start app
-app = QtWidgets.QApplication(sys.argv)
-MainWindow = QtWidgets.QMainWindow()
+app = qtw.QApplication(sys.argv)
+MainWindow = qtw.QMainWindow()
 ui = cu.ChildUi()
 ui.setupUi(MainWindow)
 MainWindow.show()

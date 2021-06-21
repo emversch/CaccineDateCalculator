@@ -1,8 +1,7 @@
-
+import datetime as dt
+from PyQt5 import QtCore as qtc
 from calcVacc import calcVacc
 import gui
-import datetime
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 texttodata = {
     "Pfizer/BioNTech": "pfizer",
@@ -18,8 +17,8 @@ class ChildUi(gui.Ui_MainWindow):
         super().setupUi(MainWindow)
 
         # set default dates to today
-        self.dateLetter.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
-        self.dateDose1Known.setDateTime(QtCore.QDateTime(datetime.date.today(), QtCore.QTime(0, 0, 0)))
+        self.dateLetter.setDateTime(qtc.QDateTime(dt.date.today(), qtc.QTime(0, 0, 0)))
+        self.dateDose1Known.setDateTime(qtc.QDateTime(dt.date.today(), qtc.QTime(0, 0, 0)))
 
         # hide dates before first calculation
         self.hide_dates()
@@ -33,18 +32,27 @@ class ChildUi(gui.Ui_MainWindow):
 
     # "click calculate" callback
     def on_click(self):
+
         self.clicked_once=True
         qv = self.dose1Known.isChecked()
+
+        # use correct date for calculations
         if qv:
             dl = self.dateDose1Known.dateTime().toPyDateTime()
         else:
             dl = self.dateLetter.dateTime().toPyDateTime()
+
+        # get vaccine name
         keycheckup = self.vaccinSelector.currentText()
         vc = texttodata[keycheckup]
+
+        # calculate dates
         dates=calcVacc(vc, dl, qv)
-        self.dateDose1.setDateTime(QtCore.QDateTime(dates[0], QtCore.QTime(0, 0, 0)))
-        self.dateDose2.setDateTime(QtCore.QDateTime(dates[1], QtCore.QTime(0, 0, 0)))
-        self.dateProtected.setDateTime(QtCore.QDateTime(dates[2], QtCore.QTime(0, 0, 0)))
+
+        # set results
+        self.dateDose1.setDateTime(qtc.QDateTime(dates[0], qtc.QTime(0, 0, 0)))
+        self.dateDose2.setDateTime(qtc.QDateTime(dates[1], qtc.QTime(0, 0, 0)))
+        self.dateProtected.setDateTime(qtc.QDateTime(dates[2], qtc.QTime(0, 0, 0)))
 
         # make dates visible
         self.show_dates()

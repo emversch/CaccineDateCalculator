@@ -1,32 +1,22 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jun 16 19:32:57 2021
-
-@author: Edward
-"""
-
-import datetime
+import datetime as dt
 
 def calcVacc(vaccin, date_letter, QVAX):
     """calculate vaccination dates"""
     
-    wait_period = {
-        "letter": 14,
-        "pfizer": 5*7,
-        "moderna": 4*7,
-        "az": 8*7,
-        "jj": 0,
-        "protected": 14
+    wait_period_weeks = {
+        "letter": 2,
+        "pfizer": 5,
+        "moderna": 4,
+        "az": 8,
+        "jj": 0
     }
-    wait_protected = 4*7 if vaccin == "jj" else 14
+    wait_protected = 4 if vaccin == "jj" else 2
     
-    if QVAX == False:
-        dose_1 = date_letter + datetime.timedelta(days=wait_period["letter"])
-    else:
-        dose_1 = date_letter
+    dose_1 = date_letter;
+    dose_1 += dt.timedelta(weeks=wait_period_weeks["letter"]) if QVAX == False else dt.timedelta(0)
         
-    dose_2 = dose_1 + datetime.timedelta(days=wait_period[vaccin])
+    dose_2 = dose_1 + dt.timedelta(weeks=wait_period_weeks[vaccin])
     
-    protected = dose_2 +datetime.timedelta(days=wait_protected)
+    protected = dose_2 + dt.timedelta(weeks=wait_protected)
     
     return [dose_1, dose_2, protected]
